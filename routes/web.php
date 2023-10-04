@@ -3,6 +3,8 @@
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MasterBidanController;
 use App\Http\Controllers\MasterObatController;
+use App\Http\Controllers\MasterLayananController;
+use App\Http\Controllers\MasterPasienController;
 use App\Http\Controllers\Index;
 use Illuminate\Support\Facades\Route;
 
