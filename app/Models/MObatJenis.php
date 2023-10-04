@@ -15,6 +15,6 @@ class MObatJenis extends Model
     ];
     public function obat()
     {
-        return $this->hasMany(Obat::class);
+        return $this->hasMany(MObat::class);
     }
 }

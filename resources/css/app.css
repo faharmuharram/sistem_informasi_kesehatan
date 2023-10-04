@@ -1,0 +1,41 @@
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333; /* warna teks yang Anda inginkan */
+    padding: 10px 20px; /* padding sesuaikan sesuai kebutuhan Anda */
+    transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0; /* warna latar belakang yang Anda inginkan saat tautan dihover */
+}
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff; /* Warna latar belakang submenu */
+    border: 1px solid #ccc; /* Garis pinggir submenu */
+    z-index: 1; /* Untuk memastikan submenu muncul di atas konten lainnya */
+}
+
+#master-menu:hover .submenu {
+    display: block;
+}
+.inhere {
+    background-color:burlywood ;
+}
+
