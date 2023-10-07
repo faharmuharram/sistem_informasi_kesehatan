@@ -34,6 +34,7 @@ Route::get('/master_jenis_obat/add', [MasterObatController::class, 'view_add_jen
 Route::post('/master_jenis_obat/add', [MasterObatController::class, 'add_jenis_obat'])->name('add_m_jenis_obat');
 //Bidan
 Route::get('/master_bidan', [MasterBidanController::class, 'view'])->name('view_m_bidan');
+Route::get('/master_bidan/add', [MasterBidanController::class, 'add'])->name('add_m_bidan');
 //Pasien
 Route::get('/master_pasien', [MasterPasienController::class, 'view'])->name('view_m_pasien');
 //Layanan
