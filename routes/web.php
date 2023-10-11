@@ -5,6 +5,8 @@ use App\Http\Controllers\MasterBidanController;
 use App\Http\Controllers\MasterObatController;
 use App\Http\Controllers\MasterLayananController;
 use App\Http\Controllers\MasterPasienController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Index;
 use Illuminate\Support\Facades\Route;
 
@@ -18,13 +20,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/index', [IndexController::class, 'view_index'])->name('index');
-
+//Login
+Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+//Regis
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('actionregister', [RegisterController::class, 'actionregister'])->name('actionregister');
+//Home / Index
+Route::get('/index', [IndexController::class, 'view_index'])->name('index')->middleware('auth');
 //Obat
 //Master Obat
 Route::get('/master_obat', [MasterObatController::class, 'view_obat'])->name('view_m_obat');

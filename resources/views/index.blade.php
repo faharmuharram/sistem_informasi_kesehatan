@@ -5,11 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index</title>
-    <link rel="stylesheet" href="{{ asset('app.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
+    <style>
+        .user-menu {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .user-menu p {
+            margin: 0;
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block; 
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: calc(100% + 10px); 
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: none;
+            z-index: 1;
+        }
+
+        .dropdown-menu li {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
     <div class="fixed-top container-fluid bg-warning p-1" style="height: 80px;">
         <div class="row align-self-center">
             <div class="col-1 text-center p-0 m-0 align-self-center">
@@ -23,9 +61,19 @@
                     <img src="https://cdn-icons-png.flaticon.com/128/4807/4807695.png" style="height:60px;" alt="">
                 </a>
             </div>
-            <div class="col text-start align-self-center">
+            <div class="col-9 text-start align-self-center">
                 <p class="mb-0" style="font-size: 30px; text-decoration: none; margin-left:-60px;">Sistem Informasi Kesehatan</p>
             </div>
+            <div class="col align-self-center">
+                <div class="user-menu text-center">
+                    <p class="m-0" style="font-size: 20px;">{{Auth::user()->username}}</p>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Pengaturan</a></li>
+                        <li><a href="{{ route('actionlogout') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>                    
         </div>
     </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -150,23 +198,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const masterMenu = document.getElementById('master-menu');
-        const submenu = masterMenu.querySelector('.submenu');
-    
-        submenu.style.display = 'none'; // Mengatur submenu agar tertutup secara default
-    
-        masterMenu.addEventListener('click', function (e) {
-            e.preventDefault();
-            submenu.style.display = 'block';
-        });
-    
-        // Tambahkan event listener pada item-item submenu untuk mencegah menutup dropdown saat mengklik itemnya
-        const submenuItems = submenu.querySelectorAll('.nav-link');
-        submenuItems.forEach(function (item) {
-            item.addEventListener('click', function (e) {
-                e.stopPropagation(); // Mencegah event klik menyebar ke parent (masterMenu)
+        // Fungsi untuk menangani submenu di master-menu
+        function handleMasterMenu() {
+            const masterMenu = document.getElementById('master-menu');
+            const submenu = masterMenu.querySelector('.submenu');
+
+            submenu.style.display = 'none';
+
+            masterMenu.addEventListener('click', function (e) {
+                e.preventDefault();
+                submenu.style.display = 'block';
             });
-        });
+
+            // Tambahkan event listener untuk mencegah penutupan offcanvas ketika submenu diklik
+            submenu.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            const submenuItems = submenu.querySelectorAll('.nav-link');
+            submenuItems.forEach(function (item) {
+                item.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            });
+        }
+
+        // Fungsi untuk menangani submenu di user-menu
+        function handleUserMenu() {
+            document.addEventListener("click", function (event) {
+                const userMenu = document.querySelector(".user-menu");
+                const dropdownMenu = userMenu.querySelector(".dropdown-menu");
+
+                if (!userMenu.contains(event.target)) {
+                    dropdownMenu.style.display = "none";
+                }
+            });
+        }
+
+        // Panggil fungsi-fungsi tersebut untuk menjalankan kode
+        handleMasterMenu();
+        handleUserMenu();
+  
     </script>
         
 </body>
